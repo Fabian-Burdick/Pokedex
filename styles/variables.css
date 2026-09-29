@@ -2,5 +2,11 @@
   /*Background-Colors*/
   --primary-bg-color: rgb(47, 47, 47);
   --secondary-bg-color: rgb(24, 24, 24);
-  --header-bg-color: rgb(28, 32, 46);
+  --header-footer-bg-color: rgb(28, 32, 46, 0.98);
+
+  /*Fonts-Colors*/
+  --primary-h1-color: rgb(242, 202, 47);
+  --primary-h2-color: rgb(242, 202, 47);
+  --primary-a-color: rgb(74, 110, 178);
+  --primary-p-color: rgb(74, 110, 178);
 }

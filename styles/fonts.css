@@ -1,0 +1,54 @@
+@font-face {
+  font-family: edu-regular;
+  src: url(../assets/fonts/EduQLDHand-Regular.ttf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: edu-variable;
+  src: url(../assets/fonts/EduQLDHand-VariableFont_wght.ttf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: edu-medium;
+  src: url(../assets/fonts/EduQLDHand-Medium.ttf);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: edu-semibold;
+  src: url(../assets/fonts/EduQLDHand-SemiBold.ttf);
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: edu-bold;
+  src: url(../assets/fonts/EduQLDHand-Bold.ttf);
+  font-weight: bold;
+}
+
+h1 {
+  color: var(--primary-h1-color);
+  font-family: edu-bold;
+  font-size: 2.5rem;
+}
+
+h2 {
+  color: var(--primary-h2-color);
+  font-family: edu-medium;
+  font-size: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-a-color);
+  font-family: edu-medium;
+  font-size: 1.5rem;
+}
+
+p {
+  color: var(--primary-p-color);
+  font-family: edu-medium;
+  font-size: 1rem;
+}
