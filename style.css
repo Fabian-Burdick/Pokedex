@@ -1,7 +1,7 @@
 * {
   margin: 0;
   scroll-behavior: smooth;
-  color: whitesmoke;
+  color: black;
 }
 
 body {
@@ -57,32 +57,23 @@ header img {
 }
 
 input {
-  height: 30px;
-  width: 200px;
+  border: 1px solid var(--primary-h1-color);
+  height: 40px;
+  width: 250px;
   background-color: rgb(59, 58, 58);
   border-radius: 15px;
   font-size: 1.5rem;
   font-family: edu-medium;
 }
 
-main::before {
-  content: '';
-  position: absolute;
+/* input.my-button:active {
+  background-color: yellow;
+  color: yellow;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  background-image: url(./assets/images/pokemon-bg.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: drop-shadow(5px 5px 25px rgb(128, 63, 4));
-  z-index: -1;
-}
+} */
 
 main {
-  position: relative; /* Wichtig für die Positionierung des Schattens */
-  width: 100%;
   max-width: 1440px;
   display: flex;
   justify-content: center;
@@ -91,17 +82,24 @@ main {
 
 .card-section {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
   flex-wrap: wrap;
 }
 
+img {
+  width: 250px;
+}
+
 .pokemon-card {
-  width: 270px;
-  height: 400px;
-  background-color: whitesmoke;
-  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 320px;
+  height: 500px;
+  border-radius: 40px;
+  border: 2px solid rgb(59, 58, 58);
 }
 
 footer {
