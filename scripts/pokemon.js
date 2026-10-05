@@ -1,37 +1,56 @@
-// Container aus deiner index.html auswählen
-const container = document.getElementById('pokeCards');
+let allPokemons = [];
+const limit = 20;
+let currentOffset = 0;
 
-// Funktion, um die Daten aus deiner lokalen JSON-Datei zu laden
-async function loadPokemonFromJSON() {
+const pokemonCards = document.getElementById('pokeCards');
+const loadMorePokemons = document.getElementById('load20More');
+
+async function initPokemonApp() {
   try {
-    // Pfad zu deiner pokemon.json (relativ von der index.html aus gesehen)
     const response = await fetch('./database/pokemon.json');
-    const pokemonList = await response.json();
-
-    // Durch die Liste aus der JSON laufen
-    for (const pokemon of pokemonList) {
-      // Da in deiner JSON nur Name und die API-URL stehen,
-      // holen wir uns hier die Details (wie Bilder und Typen) live aus dem Web
-      const detailResponse = await fetch(pokemon.url);
-      const pokemonDetails = await detailResponse.json();
-
-      // Karte erstellen und anzeigen
-      createCard(pokemonDetails);
-    }
+    allPokemons = await response.json();
+    loadNextPokemon(40);
   } catch (error) {
     console.error('Fehler beim Laden der lokalen JSON-Daten:', error);
   }
 }
 
-// Funktion, die die HTML-Karten generiert
-function createCard(pokemon) {
-  const card = document.createElement('div');
+async function loadNextPokemon(amountToLoad) {
+  const nextChunk = allPokemons.slice(currentOffset, currentOffset + amountToLoad);
+  currentOffset += amountToLoad;
+
+  for (const pokemon of nextChunk) {
+    try {
+      const detailResponse = await fetch(pokemon.url);
+      const pokemonDetails = await detailResponse.json();
+      getPokemonCard(pokemonDetails);
+    } catch (err) {
+      console.error(`Fehler beim Laden von ${pokemon.name}:`, err);
+    }
+  }
+  if (currentOffset >= allPokemons.length) {
+    loadMorePokemons.style.display = 'none';
+  }
+}
+
+loadMorePokemons.addEventListener('click', () => {
+  loadNextPokemon(limit);
+});
+
+initPokemonApp();
+
+function getPokemonCard(pokemon) {
+  const card = document.createElement('button');
+
+  card.onclick = () => {
+    const dialog = document.getElementById('openDialog');
+    if (dialog) {
+      dialog.showModal(); // Öffnet das HTML5 <dialog> Element
+    }
+  };
+
   card.classList.add('pokemon-card');
-
-  // Typen bestimmen
-  const primaryType = pokemon.types[0].type.name;
-
-  // Farben basierend auf deinem Design zuweisen
+  const primaryType = pokemon.types && pokemon.types[0] ? pokemon.types[0].type.name : 'normal';
   const typeColors = {
     grass: 'bg-green',
     bug: 'bg-green2',
@@ -49,21 +68,25 @@ function createCard(pokemon) {
     dragon: 'bg-darkblue',
     steel: 'bg-grey',
     dark: 'bg-darkbrown',
+    normal: 'bg-default',
   };
-
-  // 2. Die Klasse in nur einer Zeile ermitteln und hinzufügen!
   card.classList.add(typeColors[primaryType] || 'bg-default');
 
-  // Karte mit offiziellem Bild und Name befüllen
+  const pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+  const typeIconUrl = `./assets/icons/${primaryType}.webp`;
+
   card.innerHTML = `
-    <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
-    <h3>${pokemon.name.toUpperCase()}</h3>
-    <span class="type-badge">${primaryType}</span>
+    <h3>${pokemon.name}</h3>
+    <img src="${pokemonImg}" alt="${pokemon.name}">
+    <div>
+      <img class="type-icon" 
+           src="${typeIconUrl}" 
+           alt="${primaryType}" 
+           title="${primaryType.toUpperCase()}">
+    </div>
   `;
 
-  container.appendChild(card);
+  pokemonCards.appendChild(card);
 }
 
-// Funktion direkt beim Laden ausführen
-// (Da du vermutlich 'defer' nutzt oder das Script unten eingebunden hast)
 loadPokemonFromJSON();

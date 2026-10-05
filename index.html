@@ -12,26 +12,30 @@
     <script src="./script.js" defer></script>
     <script src="./scripts/pokemon.js" defer></script>
     <script src="./scripts/templates.js"></script>
-
   </head>
   <body>
     <header>
       <section>
         <div class="icon-content">
           <img src="./assets/images/pokeball.png" />
-          <h1>Pokédex</h1>
+          <a href="/index.html">
+            <h1>Pokédex</h1>
+          </a>
         </div>
         <div class="input-content">
-          <h2>Pokémon suchen</h2>
-          <input type="" value="Pokémon suchen" ></input>
+          <input type="search" id="pokemon-search" placeholder="Pokémon suchen" />
         </div>
       </section>
     </header>
     <main>
       <section id="pokeCards" class="card-section">
-        <!--Pokémon-Cards rendered here--> 
+        <!--Pokémon-Cards rendered here-->
       </section>
+
+      <dialog id="openDialog"></dialog>
     </main>
+
+    <button id="load20More" class="plus-button"><h2>+20 Pokémon</h2></button>
 
     <footer>
       <section>

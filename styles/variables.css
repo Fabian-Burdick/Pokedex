@@ -2,11 +2,19 @@
   /*Background-Colors*/
   --primary-bg-color: rgb(47, 47, 47);
   --secondary-bg-color: rgb(24, 24, 24);
-  --header-footer-bg-color: rgb(28, 32, 46, 0.98);
+  --header-footer-bg-color: rgb(28, 32, 46, 0.9);
+  --input-focus-bg-color: rgb(242, 202, 47);
 
   /*Fonts-Colors*/
   --primary-h1-color: rgb(242, 202, 47);
   --primary-h2-color: rgb(242, 202, 47);
+  --primary-h3-color: rgb(28, 32, 46, 0.98);
   --primary-a-color: rgb(74, 110, 178);
   --primary-p-color: rgb(74, 110, 178);
+
+  /*Buttons-Colors*/
+  --plusbutton-bg-color: rgb(28, 32, 46, 0.98);
+  --button-border-color: rgb(242, 202, 47);
+  --plusbutton-hover-color: rgb(74, 110, 178);
+  --plusbutton-hover-shadow: 0 0 30px rgba(74, 110, 178, 0.7);
 }

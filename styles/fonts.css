@@ -40,6 +40,12 @@ h2 {
   font-size: 1.5rem;
 }
 
+h3 {
+  color: var(--primary-h3-color);
+  font-family: edu-bold;
+  font-size: 2rem;
+}
+
 a {
   text-decoration: none;
   color: var(--primary-a-color);
