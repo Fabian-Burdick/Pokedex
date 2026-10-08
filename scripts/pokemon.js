@@ -3,7 +3,7 @@ let currentOffset = 0;
 
 const limit = 20;
 const pokemonCards = document.getElementById('pokeCards');
-const loadMorePokemons = document.getElementById('load20More');
+const loadMorePokemons = document.getElementById('loadMoreCards');
 
 const typeColors = {
   grass: 'bg-green',
@@ -34,8 +34,7 @@ function getPokemonCard(pokemon) {
   card.classList.add('pokemon-card');
 
   card.onclick = () => {
-    const dialog = document.getElementById('openDialog');
-    if (dialog) dialog.showModal();
+    openDialog(pokemon);
   };
 
   const primaryType = pokemon.types && pokemon.types[0] ? pokemon.types[0].type.name : 'normal';
@@ -52,7 +51,7 @@ async function initPokemonApp() {
   try {
     const response = await fetch('./database/pokemon.json');
     allPokemons = await response.json();
-    loadNextPokemon(40); // Lädt die ersten 40 Pokémon beim Start
+    loadNextPokemon(40);
   } catch (error) {
     console.error('Fehler beim Laden der lokalen JSON-Daten:', error);
   }

@@ -6,11 +6,13 @@
     <title>Pokedex</title>
     <link rel="icon" type="image/png" href="./assets/icons/favicon.webp" sizes="32x32" />
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/dialog.css" />
     <link rel="stylesheet" href="./styles/color.css" />
     <link rel="stylesheet" href="./styles/fonts.css" />
     <link rel="stylesheet" href="./styles/variables.css" />
     <script src="./script.js" defer></script>
     <script src="./scripts/pokemon.js" defer></script>
+    <script src="./scripts/dialog.js" defer></script>
     <script src="./scripts/templates.js"></script>
   </head>
   <body>
@@ -32,10 +34,13 @@
         <!--Pokémon-Cards rendered here-->
       </section>
 
-      <dialog id="openDialog"></dialog>
+      <dialog id="pokemonDialog">
+        <div id="dialogContent"></div>
+        <!-- Pokémon-Infos rendered here -->
+      </dialog>
     </main>
 
-    <button id="load20More" class="plus-button"><h2>+20 Pokémon</h2></button>
+    <button id="loadMoreCards" class="plus-button"><h2>+20 Pokémon</h2></button>
 
     <footer>
       <section>

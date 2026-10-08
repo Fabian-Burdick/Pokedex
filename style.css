@@ -5,7 +5,7 @@
 }
 
 button {
-  border: none;
+  all: unset;
   cursor: pointer;
 }
 

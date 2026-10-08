@@ -1,5 +1,5 @@
 .bg-default {
-  background-color: rgba(114, 114, 114, 0.8);
+  background-color: rgba(114, 114, 114);
   box-shadow:
     0 0 5px rgb(114, 114, 114),
     0 0 15px rgba(114, 114, 114, 0.5),
@@ -7,7 +7,7 @@
 }
 
 .bg-green {
-  background-color: rgb(122, 199, 26, 0.8);
+  background-color: rgb(122, 199, 26);
   box-shadow:
     0 0 5px rgb(122, 199, 26),
     0 0 15px rgba(0, 255, 100, 0.5),
@@ -15,7 +15,7 @@
 }
 
 .bg-green2 {
-  background-color: rgb(122, 199, 76, 0.8);
+  background-color: rgb(122, 199, 76);
   box-shadow:
     0 0 5px rgb(122, 199, 76),
     0 0 15px rgba(0, 255, 100, 0.5),
@@ -23,7 +23,7 @@
 }
 
 .bg-blue {
-  background-color: rgb(100, 100, 255, 0.8);
+  background-color: rgb(100, 100, 255);
   box-shadow:
     0 0 5px rgb(100, 100, 255),
     0 0 15px rgba(100, 100, 255, 0.5),
@@ -31,7 +31,7 @@
 }
 
 .bg-lightblue {
-  background-color: rgb(150, 217, 214, 0.8);
+  background-color: rgb(150, 217, 214);
   box-shadow:
     0 0 5px rgb(150, 217, 214),
     0 0 15px rgba(150, 217, 214, 0.5),
@@ -39,7 +39,7 @@
 }
 
 .bg-darkblue {
-  background-color: rgb(111, 53, 252, 0.8);
+  background-color: rgb(111, 53, 252);
   box-shadow:
     0 0 5px rgb(111, 53, 252),
     0 0 15px rgba(111, 53, 252, 0.5),
@@ -47,7 +47,7 @@
 }
 
 .bg-red {
-  background-color: rgb(255, 80, 80, 0.8);
+  background-color: rgb(255, 80, 80);
   box-shadow:
     0 0 5px rgb(255, 80, 80, 0.8),
     0 0 15px rgba(255, 80, 80, 0.5),
@@ -55,7 +55,7 @@
 }
 
 .bg-yellow {
-  background-color: rgba(255, 255, 0, 0.8);
+  background-color: rgba(255, 255, 0);
   box-shadow:
     0 0 5px rgb(255, 255, 0),
     0 0 15px rgba(255, 255, 0, 0.5),
@@ -63,7 +63,7 @@
 }
 
 .bg-purple {
-  background-color: rgb(205, 111, 206, 0.8);
+  background-color: rgb(205, 111, 206);
   box-shadow:
     0 0 5px rgb(205, 111, 206),
     0 0 15px rgba(205, 111, 206, 0.5),
@@ -71,7 +71,7 @@
 }
 
 .bg-brown {
-  background-color: rgb(100, 50, 50, 0.8);
+  background-color: rgb(100, 50, 50);
   box-shadow:
     0 0 5px rgb(100, 50, 50),
     0 0 15px rgba(100, 50, 50, 0.5),
@@ -79,7 +79,7 @@
 }
 
 .bg-brownorange {
-  background-color: rgb(182, 161, 54, 0.8);
+  background-color: rgb(182, 161, 54);
   box-shadow:
     0 0 5px rgb(182, 161, 54),
     0 0 15px rgba(182, 161, 54, 0.5),
@@ -87,7 +87,7 @@
 }
 
 .bg-rose {
-  background-color: rgb(214, 133, 173, 0.8);
+  background-color: rgb(214, 133, 173);
   box-shadow:
     0 0 5px rgb(214, 133, 173),
     0 0 15px rgba(214, 133, 173, 0.5),
@@ -95,7 +95,7 @@
 }
 
 .bg-rost {
-  background-color: rgb(129, 45, 42, 0.8);
+  background-color: rgb(129, 45, 42);
   box-shadow:
     0 0 5px rgb(129, 45, 42),
     0 0 15px rgba(129, 45, 42, 0.5),
@@ -103,7 +103,7 @@
 }
 
 .bg-lila {
-  background-color: rgb(115, 87, 151, 0.8);
+  background-color: rgb(115, 87, 151);
   box-shadow:
     0 0 5px rgb(115, 87, 151),
     0 0 15px rgba(115, 87, 151, 0.5),
