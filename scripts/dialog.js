@@ -7,10 +7,17 @@ function openDialog(pokemon) {
 
   dialogContent.innerHTML = PokemonDialogTemplate(pokemon, pokemonImg, primaryType);
   dialogRef.className = '';
-  dialogRef.classList.add(getPokemonColorClass(primaryType));
+  // dialogRef.classList.add(getPokemonColorClass(primaryType));
   dialogRef.showModal();
 }
 
 function closeDialog() {
   dialogRef.close();
+}
+
+function updateProgressBar() {
+  let percent = (currentQuestion + 1) / questions.length;
+  percent = Math.round(percent * 100);
+  document.getElementById('progressBar').innerHTML = `${percent}%`;
+  document.getElementById('progressBar').style.width = `${percent}%`;
 }

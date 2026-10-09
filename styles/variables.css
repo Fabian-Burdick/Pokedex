@@ -1,9 +1,9 @@
 :root {
   /*Background-Colors*/
-  --primary-bg-color: rgb(47, 47, 47);
-  --secondary-bg-color: rgb(24, 24, 24);
+  --primary-bg-color: rgb(24, 24, 24);
   --header-footer-bg-color: rgb(28, 32, 46, 0.9);
   --input-focus-bg-color: rgb(242, 202, 47);
+  --dialog-bg-color: rgb(28, 32, 46);
 
   /*Fonts-Colors*/
   --primary-h1-color: rgb(242, 202, 47);
