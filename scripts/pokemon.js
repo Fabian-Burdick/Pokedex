@@ -36,14 +36,19 @@ async function fetchEvolutionChain(chainUrl) {
     const chain = [];
     let currentStep = chainData.chain;
     while (currentStep) {
+      const urlParts = currentStep.species.url.split('/').filter(Boolean);
+      const pokemonId = parseInt(urlParts[urlParts.length - 1], 10);
+      const imgUrl = `https://githubusercontent.com{pokemonId}.png`;
       chain.push({
+        id: pokemonId,
         name: currentStep.species.name,
+        image: imgUrl,
       });
       currentStep = currentStep.evolves_to[0];
     }
     return chain;
   } catch (err) {
-    console.error('Fehler beim Laden der Entwicklungskette aus der API:', err);
+    console.error('Fehler beim Laden der Entwicklungskette:', err);
     return null;
   }
 }
@@ -53,12 +58,13 @@ async function loadAndOpenPokemon(pokemon) {
     if (!pokemon.evolutionChain) {
       const speciesResponse = await fetch(pokemon.species.url);
       const speciesData = await speciesResponse.json();
+
       const evolutionChain = await fetchEvolutionChain(speciesData.evolution_chain.url);
       pokemon.evolutionChain = evolutionChain;
     }
     openDialog(pokemon);
   } catch (error) {
-    console.error('Fehler in loadAndOpenPokemon:', error);
+    console.error('Fehler beim Vorbereiten der Evolutionsdaten:', error);
     openDialog(pokemon);
   }
 }

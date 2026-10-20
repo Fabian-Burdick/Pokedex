@@ -45,3 +45,19 @@ function getPokemonCard(pokemon) {
   card.innerHTML = PokemonCardsTemplate(pokemon, pokemonImg, typeIconUrl, primaryType);
   pokemonCards.appendChild(card);
 }
+
+function searchPokemon(searchString) {
+  const pokemonCards = document.querySelectorAll('.pokemon-card');
+  pokemonCards.forEach((card) => {
+    const pokemonName = card.querySelector('h3').textContent.toLowerCase();
+    if (pokemonName.includes(searchString.toLowerCase())) {
+      card.style.display = 'block'; // Falls du Flexbox nutzt, hier 'flex' eintragen
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+document.getElementById('pokemon-search').addEventListener('input', function (event) {
+  searchPokemon(event.target.value);
+});

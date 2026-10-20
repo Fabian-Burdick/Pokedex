@@ -8,7 +8,7 @@ function PokemonCardsTemplate(pokemon, pokemonImg, typeIconUrl, primaryType) {
                  alt="${primaryType}" 
                  title="${primaryType.toUpperCase()}">
         </div>
-    `;
+  `;
 }
 
 function PokemonDialogTemplate(pokemon, pokemonImg, primaryType) {
