@@ -7,6 +7,10 @@ dialog {
   overflow: hidden;
   background-color: var(--dialog-bg-color);
   border: 2px solid rgb(59, 58, 58);
+  background-image: url(../assets/images/background-card.png);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 body:has(dialog[open]) {

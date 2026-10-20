@@ -20,3 +20,25 @@ function updateProgressBar() {
   document.getElementById('progressBar').innerHTML = `${percent}%`;
   document.getElementById('progressBar').style.width = `${percent}%`;
 }
+
+async function nextPokemonBtn(currentId) {
+  const currentIndex = allPokemons.findIndex((p) => p.id === currentId);
+  const nextIndex = currentIndex + 1;
+  if (nextIndex < allPokemons.length) {
+    const nextPokemonStub = allPokemons[nextIndex];
+    const detailResponse = await fetch(nextPokemonStub.url);
+    const nextPokemonDetails = await detailResponse.json();
+    await loadAndOpenPokemon(nextPokemonDetails);
+  }
+}
+
+async function previousPokemonBtn(currentId) {
+  const currentIndex = allPokemons.findIndex((p) => p.id === currentId);
+  const prevIndex = currentIndex - 1;
+  if (prevIndex >= 0) {
+    const prevPokemonStub = allPokemons[prevIndex];
+    const detailResponse = await fetch(prevPokemonStub.url);
+    const prevPokemonDetails = await detailResponse.json();
+    await loadAndOpenPokemon(prevPokemonDetails);
+  }
+}
