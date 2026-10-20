@@ -70,24 +70,18 @@ function PokemonStatsTemplate(stats) {
 }
 
 function PokemonEvolutionTemplate(evolutionChain, currentPokemonName) {
-  // Sicherheitsabfrage: Wenn keine Kette vorhanden oder das Array leer ist
   if (!evolutionChain || !Array.isArray(evolutionChain) || evolutionChain.length <= 1) {
     return `<p class="no-evolution">Dieses Pokémon hat keine Entwicklungen.</p>`;
   }
-
   return evolutionChain
     .map((p) => {
-      // Fehlerschutz: Falls 'p' oder 'p.name' unerwartet undefined ist
       if (!p || !p.name) return '';
 
-      // Vergleicht den Namen des aktuellen Pokémon mit dem Schritt in der Evolution-Kette
       const isCurrent = p.name.toLowerCase() === currentPokemonName.toLowerCase() ? 'active-evolution' : '';
-
-      // Ersten Buchstaben groß schreiben für eine schönere Optik
       const formattedName = p.name.charAt(0).toUpperCase() + p.name.slice(1);
 
       return `<span class="evolution-step ${isCurrent}">${formattedName}</span>`;
     })
-    .filter((html) => html !== '') // Entfernt leere Einträge, falls Daten fehlerhaft waren
+    .filter((html) => html !== '')
     .join(' <span class="evolution-arrow">➔</span> ');
 }
