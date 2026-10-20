@@ -116,3 +116,35 @@ body:has(dialog[open]) {
   margin: 8px;
   white-space: nowrap;
 }
+
+.pokemon-evolution-container {
+  margin-top: 20px;
+}
+
+.pokemon-evolution-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.evolution-step {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+/* Das Pokémon, das der User gerade im Dialog sieht, leuchtet auf */
+.evolution-step.active-evolution {
+  color: #fff;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.evolution-arrow {
+  color: #ffcb05; /* Pokémon-Gelb */
+}

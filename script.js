@@ -33,13 +33,12 @@ function getPokemonColorClass(type) {
 function getPokemonCard(pokemon) {
   const card = document.createElement('button');
   card.classList.add('pokemon-card');
-  card.onclick = () => {
-    openDialog(pokemon);
+  card.onclick = async () => {
+    await loadAndOpenPokemon(pokemon);
   };
 
   const primaryType = pokemon.types && pokemon.types[0] ? pokemon.types[0].type.name : 'normal';
   card.classList.add(getPokemonColorClass(primaryType));
-
   const pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
   const typeIconUrl = `./assets/icons/${primaryType}.webp`;
 

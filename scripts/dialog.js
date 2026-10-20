@@ -7,7 +7,6 @@ function openDialog(pokemon) {
 
   dialogContent.innerHTML = PokemonDialogTemplate(pokemon, pokemonImg, primaryType);
   dialogRef.className = '';
-  // dialogRef.classList.add(getPokemonColorClass(primaryType));
   dialogRef.showModal();
 }
 

@@ -1,3 +1,5 @@
+//async for Cards//
+
 async function initPokemonApp() {
   try {
     const response = await fetch('./database/pokemon.json');
@@ -22,6 +24,64 @@ async function loadNextPokemon(amountToLoad) {
   }
   if (currentOffset >= allPokemons.length) {
     loadMorePokemons.style.display = 'none';
+  }
+}
+
+//async for Dialog//
+
+async function fetchEvolutionChain(chainUrl) {
+  try {
+    const response = await fetch(chainUrl);
+    const chainData = await response.json();
+    const chain = [];
+    let currentStep = chainData.chain;
+    while (currentStep) {
+      chain.push({
+        name: currentStep.species.name,
+      });
+      currentStep = currentStep.evolves_to[0];
+    }
+    return chain;
+  } catch (err) {
+    console.error('Fehler beim Laden der Entwicklungskette aus der API:', err);
+    return null;
+  }
+}
+
+async function loadAndOpenPokemon(pokemon) {
+  try {
+    if (!pokemon.evolutionChain) {
+      const speciesResponse = await fetch(pokemon.species.url);
+      const speciesData = await speciesResponse.json();
+      const evolutionChain = await fetchEvolutionChain(speciesData.evolution_chain.url);
+      pokemon.evolutionChain = evolutionChain;
+    }
+    openDialog(pokemon);
+  } catch (error) {
+    console.error('Fehler in loadAndOpenPokemon:', error);
+    openDialog(pokemon);
+  }
+}
+
+async function nextPokemonBtn(currentId) {
+  const currentIndex = allPokemons.findIndex((p) => p.id === currentId);
+  const nextIndex = currentIndex + 1;
+  if (nextIndex < allPokemons.length) {
+    const nextPokemonStub = allPokemons[nextIndex];
+    const detailResponse = await fetch(nextPokemonStub.url);
+    const nextPokemonDetails = await detailResponse.json();
+    await loadAndOpenPokemon(nextPokemonDetails);
+  }
+}
+
+async function previousPokemonBtn(currentId) {
+  const currentIndex = allPokemons.findIndex((p) => p.id === currentId);
+  const prevIndex = currentIndex - 1;
+  if (prevIndex >= 0) {
+    const prevPokemonStub = allPokemons[prevIndex];
+    const detailResponse = await fetch(prevPokemonStub.url);
+    const prevPokemonDetails = await detailResponse.json();
+    await loadAndOpenPokemon(prevPokemonDetails);
   }
 }
 

@@ -14,9 +14,9 @@ function PokemonCardsTemplate(pokemon, pokemonImg, typeIconUrl, primaryType) {
 function PokemonDialogTemplate(pokemon, pokemonImg, primaryType) {
   return `
     <div class="dialog-header">
-      <button class="close-button" onclick="closeDialog()"><</button>
+      <button class="close-button" onclick="previousPokemonBtn(${pokemon.id})"><</button>
       <button class="close-button" onclick="closeDialog()">X</button>
-      <button class="close-button" onclick="closeDialog()">></button>
+      <button class="close-button" onclick="nextPokemonBtn(${pokemon.id})">></button>
     </div>
     <div class="pokemon-info">
        <div class="pokemon-typ-container">
@@ -31,6 +31,10 @@ function PokemonDialogTemplate(pokemon, pokemonImg, primaryType) {
          <h1>Basis-Stats</h1>
          <div class="pokemon-stats">
            ${PokemonStatsTemplate(pokemon.stats)}
+         </div>
+         <h1>Entwicklungen</h1>
+         <div class="pokemon-evolution-chain">
+           ${PokemonEvolutionTemplate(pokemon.evolutionChain, pokemon.name)}
          </div>
        </div> 
     </div>
@@ -63,4 +67,27 @@ function PokemonStatsTemplate(stats) {
       </div>`;
     })
     .join('');
+}
+
+function PokemonEvolutionTemplate(evolutionChain, currentPokemonName) {
+  // Sicherheitsabfrage: Wenn keine Kette vorhanden oder das Array leer ist
+  if (!evolutionChain || !Array.isArray(evolutionChain) || evolutionChain.length <= 1) {
+    return `<p class="no-evolution">Dieses Pokémon hat keine Entwicklungen.</p>`;
+  }
+
+  return evolutionChain
+    .map((p) => {
+      // Fehlerschutz: Falls 'p' oder 'p.name' unerwartet undefined ist
+      if (!p || !p.name) return '';
+
+      // Vergleicht den Namen des aktuellen Pokémon mit dem Schritt in der Evolution-Kette
+      const isCurrent = p.name.toLowerCase() === currentPokemonName.toLowerCase() ? 'active-evolution' : '';
+
+      // Ersten Buchstaben groß schreiben für eine schönere Optik
+      const formattedName = p.name.charAt(0).toUpperCase() + p.name.slice(1);
+
+      return `<span class="evolution-step ${isCurrent}">${formattedName}</span>`;
+    })
+    .filter((html) => html !== '') // Entfernt leere Einträge, falls Daten fehlerhaft waren
+    .join(' <span class="evolution-arrow">➔</span> ');
 }
