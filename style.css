@@ -1,7 +1,6 @@
 * {
   margin: 0;
   scroll-behavior: smooth;
-  /* color: black; */
 }
 
 button {
@@ -188,4 +187,86 @@ li:hover {
 
 li {
   list-style-type: none;
+}
+
+@media screen and (max-width: 768px) {
+  header section {
+    gap: 20px;
+  }
+
+  header img {
+    width: 60px;
+    height: 70px;
+  }
+
+  input {
+    height: 30px;
+    width: 200px;
+    font-size: 1rem;
+  }
+
+  .card-section {
+    gap: 25px;
+  }
+
+  img {
+    width: 200px;
+  }
+
+  .pokemon-card {
+    width: 280px;
+    height: 420px;
+  }
+
+  .type-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  footer section {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 0;
+  }
+
+  .footer-links {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header {
+    height: 70px;
+  }
+
+  header section {
+    justify-content: center;
+    padding-bottom: 0;
+    gap: 10px;
+  }
+
+  .icon-content {
+    gap: 5px;
+  }
+
+  header img {
+    width: 50px;
+    height: 60px;
+  }
+
+  input {
+    height: 25px;
+    width: 150px;
+    font-size: 0.75rem;
+  }
+
+  footer {
+    height: 70px;
+  }
+
+  footer section {
+    flex-wrap: wrap;
+    gap: 0px;
+    padding-top: 0;
+  }
 }

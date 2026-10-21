@@ -51,7 +51,7 @@ function searchPokemon(searchString) {
   pokemonCards.forEach((card) => {
     const pokemonName = card.querySelector('h3').textContent.toLowerCase();
     if (pokemonName.includes(searchString.toLowerCase())) {
-      card.style.display = 'block'; // Falls du Flexbox nutzt, hier 'flex' eintragen
+      card.style.display = 'block';
     } else {
       card.style.display = 'none';
     }
