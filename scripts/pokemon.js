@@ -35,16 +35,21 @@ async function fetchEvolutionChain(chainUrl) {
     const chainData = await response.json();
     const chain = [];
     let currentStep = chainData.chain;
+
     while (currentStep) {
       const urlParts = currentStep.species.url.split('/').filter(Boolean);
       const pokemonId = parseInt(urlParts[urlParts.length - 1], 10);
-      const imgUrl = `https://githubusercontent.com{pokemonId}.png`;
+      const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
       chain.push({
         id: pokemonId,
         name: currentStep.species.name,
         image: imgUrl,
       });
-      currentStep = currentStep.evolves_to[0];
+      if (currentStep.evolves_to && currentStep.evolves_to.length > 0) {
+        currentStep = currentStep.evolves_to[0];
+      } else {
+        currentStep = null;
+      }
     }
     return chain;
   } catch (err) {

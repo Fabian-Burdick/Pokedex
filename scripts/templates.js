@@ -1,12 +1,22 @@
-function PokemonCardsTemplate(pokemon, pokemonImg, typeIconUrl, primaryType) {
+function PokemonCardsTemplate(pokemon, pokemonImg) {
+  const typeIconsHTML = pokemon.types
+    .map((t) => {
+      const typeName = t.type.name;
+      const iconUrl = `assets/icons/${typeName}.webp`;
+      return `
+        <img class="type-icon ${getPokemonColorClass(typeName)}" 
+             src="${iconUrl}" 
+             alt="${typeName}" 
+             title="${typeName.toUpperCase()}">
+      `;
+    })
+    .join('');
+
   return `
         <h3>${pokemon.name}</h3>
         <img src="${pokemonImg}" alt="${pokemon.name}">
-        <div>
-            <img class="type-icon" 
-                 src="${typeIconUrl}" 
-                 alt="${primaryType}" 
-                 title="${primaryType.toUpperCase()}">
+        <div class="types-container">
+            ${typeIconsHTML}
         </div>
   `;
 }
@@ -14,26 +24,28 @@ function PokemonCardsTemplate(pokemon, pokemonImg, typeIconUrl, primaryType) {
 function PokemonDialogTemplate(pokemon, pokemonImg, primaryType) {
   return `
     <div class="dialog-header">
-      <button class="close-button" onclick="previousPokemonBtn(${pokemon.id})"><</button>
+      <button class="prev-next-button" onclick="previousPokemonBtn(${pokemon.id})"><</button>
       <button class="close-button" onclick="closeDialog()">X</button>
-      <button class="close-button" onclick="nextPokemonBtn(${pokemon.id})">></button>
+      <button class="prev-next-button" onclick="nextPokemonBtn(${pokemon.id})">></button>
     </div>
     <div class="pokemon-info">
        <div class="pokemon-typ-container">
-         <h1># ${pokemon.id} </h1>
-         <h1>${pokemon.name.toUpperCase()}</h1>
-         <img src="${pokemonImg}" alt="${pokemon.name}" ${getPokemonColorClass()}>
+         <div class="pokemon-typ-text">
+          <h1># ${pokemon.id} </h1>
+          <h1>${pokemon.name.toUpperCase()}</h1>
+          <img src="${pokemonImg}" alt="${pokemon.name}" class="dialog-id-img">
+         </div>
          <div class="pokemon-typ">
            ${PokemonTypesTemplate(pokemon.types)}
          </div>    
        </div>
-       <div class="pokemon-stats-container">
+       <div class="pokemon-info-container">
          <h1>Basis-Stats</h1>
          <div class="pokemon-stats">
            ${PokemonStatsTemplate(pokemon.stats)}
          </div>
          <h1>Entwicklungen</h1>
-         <div class="pokemon-evolution-chain">
+         <div class="pokemon-evolution-container">
            ${PokemonEvolutionTemplate(pokemon.evolutionChain, pokemon.name)}
          </div>
        </div> 
@@ -52,7 +64,7 @@ function PokemonTypesTemplate(types) {
     .join('');
 }
 
-function PokemonStatsTemplate(stats) {
+function PokemonStatsTemplate(stats, primaryType) {
   return stats
     .map((s) => {
       const percent = (s.base_stat / 255) * 100;
@@ -80,7 +92,10 @@ function PokemonEvolutionTemplate(evolutionChain, currentPokemonName) {
       const isCurrent = p.name.toLowerCase() === currentPokemonName.toLowerCase() ? 'active-evolution' : '';
       const formattedName = p.name.charAt(0).toUpperCase() + p.name.slice(1);
 
-      return `<span class="evolution-step ${isCurrent}">${formattedName}</span>`;
+      return `<div class="evolution-step ${isCurrent}">
+          <img class="evolution-img" src="${p.image}" alt="${p.name}">
+          <h2>${formattedName}<h2>
+        </div>`;
     })
     .filter((html) => html !== '')
     .join(' <span class="evolution-arrow">➔</span> ');
