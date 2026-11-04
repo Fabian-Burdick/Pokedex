@@ -20,7 +20,7 @@ body:has(dialog[open]) {
 .prev-next-button {
   font-size: 1.5rem;
   font-weight: bold;
-  color: rgb(4, 0, 255);
+  color: var(--prevnextbutton-color);
   text-align: center;
   width: 40px;
   height: 40px;
@@ -92,6 +92,7 @@ body:has(dialog[open]) {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 460px;
 }
 
 .pokemon-stats {
@@ -149,9 +150,9 @@ body:has(dialog[open]) {
 
 .evolution-step.active-evolution h2 {
   background-color: rgb(59, 58, 58);
-  width: 105%;
   text-align: center;
   border-radius: 20px;
+  padding: 5px;
 }
 
 .evolution-arrow {
@@ -164,4 +165,119 @@ body:has(dialog[open]) {
 .evolution-img {
   width: 120px;
   height: 120px;
+}
+
+/* Desktop  */
+.desktop-dialog {
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  dialog {
+    width: 92%;
+    height: 85dvh;
+    max-height: 750px;
+    padding: 0;
+    border-radius: 25px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .desktop-dialog {
+    display: none;
+  }
+  .mobile-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  .mobile-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .mobile-dialog-header h2 {
+    font-size: 1.1rem;
+    color: var(--primary-h3-color);
+  }
+  .mobile-pages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    margin-top: 15px;
+  }
+  .mobile-page {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+  .mobile-page.active-page {
+    display: flex;
+  }
+  .mobile-pokemon-img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+  }
+  .mobile-page h2 {
+    color: var(--primary-h3-color);
+  }
+  .mobile-page p {
+    color: white;
+  }
+  .mobile-page .pokemon-stats {
+    width: 100%;
+  }
+  .mobile-page .stat-name {
+    width: 100px;
+    font-size: 0.75rem;
+  }
+  .mobile-page .stats-bar {
+    gap: 5px;
+  }
+  .mobile-page .stat-number {
+    font-size: 0.8rem;
+  }
+  .mobile-page .pokemon-evolution-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mobile-page .evolution-img {
+    width: 75px;
+    height: 75px;
+  }
+  .mobile-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+  }
+  .mobile-nav-button {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(59, 58, 58);
+    color: #ffcb05;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+  .mobile-page-indicator {
+    display: flex;
+    gap: 10px;
+  }
+  .mobile-page-indicator span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: gray;
+  }
+  .mobile-page-indicator .active-dot {
+    background-color: #ffcb05;
+  }
 }

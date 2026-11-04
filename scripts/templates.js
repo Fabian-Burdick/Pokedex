@@ -11,7 +11,6 @@ function PokemonCardsTemplate(pokemon, pokemonImg) {
       `;
     })
     .join('');
-
   return `
         <h3>${pokemon.name}</h3>
         <img src="${pokemonImg}" alt="${pokemon.name}">
@@ -21,36 +20,75 @@ function PokemonCardsTemplate(pokemon, pokemonImg) {
   `;
 }
 
-function PokemonDialogTemplate(pokemon, pokemonImg, primaryType) {
+function PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType) {
   return `
-    <div class="dialog-header">
-      <button class="prev-next-button" onclick="previousPokemonBtn(${pokemon.id})"><</button>
-      <button class="close-button" onclick="closeDialog()">X</button>
-      <button class="prev-next-button" onclick="nextPokemonBtn(${pokemon.id})">></button>
+    <div class="desktop-dialog">
+        <div class="dialog-header">
+            <button class="prev-next-button" onclick="previousPokemonBtn(${pokemon.id})">&lt;</button>
+            <button class="close-button" onclick="closeDialog()">X</button>
+            <button class="prev-next-button" onclick="nextPokemonBtn(${pokemon.id})">&gt;</button>
+        </div>
+        <div class="pokemon-info">
+            <div class="pokemon-typ-container">
+                <div class="pokemon-typ-text">
+                    <h1># ${pokemon.id}</h1>
+                    <h1>${pokemon.name.toUpperCase()}</h1>
+                    <img src="${pokemonImg}" alt="${pokemon.name}" />
+                </div>
+                <div class="pokemon-typ">${PokemonTypesTemplate(pokemon.types)}</div>
+            </div>
+            <div class="pokemon-info-container">
+                <h1>Basis-Stats</h1>
+                <div class="pokemon-stats">${PokemonStatsTemplate(pokemon.stats)}</div>
+                <h1>Entwicklungen</h1>
+                <div class="pokemon-evolution-container">${PokemonEvolutionTemplate(pokemon.evolutionChain, pokemon.name)}</div>
+            </div>
+        </div>
     </div>
-    <div class="pokemon-info">
-       <div class="pokemon-typ-container">
-         <div class="pokemon-typ-text">
-          <h1># ${pokemon.id} </h1>
-          <h1>${pokemon.name.toUpperCase()}</h1>
-          <img src="${pokemonImg}" alt="${pokemon.name}" class="dialog-id-img">
-         </div>
-         <div class="pokemon-typ">
-           ${PokemonTypesTemplate(pokemon.types)}
-         </div>    
-       </div>
-       <div class="pokemon-info-container">
-         <h1>Basis-Stats</h1>
-         <div class="pokemon-stats">
-           ${PokemonStatsTemplate(pokemon.stats)}
-         </div>
-         <h1>Entwicklungen</h1>
-         <div class="pokemon-evolution-container">
-           ${PokemonEvolutionTemplate(pokemon.evolutionChain, pokemon.name)}
-         </div>
-       </div> 
+    `;
+}
+
+function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
+  return `
+    <div class="mobile-dialog">
+        <div class="mobile-dialog-header">
+            <button class="close-button" onclick="closeDialog()">X</button>
+            <h1>#${pokemon.id} ${pokemon.name.toUpperCase()}</h1>
+        </div>
+        <div class="mobile-pages">
+            <!-- Seite 1 -->
+            <div class="mobile-page active-page">
+                <h1>Pokémon-Informationen</h1>
+                <h1>#${pokemon.id}</h1>
+                <h1>${pokemon.name.toUpperCase()}</h1>
+                <img class="mobile-pokemon-img" src="${pokemonImg}" alt="${pokemon.name}" />
+                <div class="pokemon-typ">${PokemonTypesTemplate(pokemon.types)}</div>
+            </div>
+            <!-- Seite 2 -->
+            <div class="mobile-page">
+                <h2>Basis-Stats</h2>
+                <div class="pokemon-stats">${PokemonStatsTemplate(pokemon.stats)}</div>
+                <h2>Weitere Informationen</h2>
+                <p>Größe: ${pokemon.height / 10} m</p>
+                <p>Gewicht: ${pokemon.weight / 10} kg</p>
+            </div>
+            <!-- Seite 3 -->
+            <div class="mobile-page">
+                <h2>Entwicklungen</h2>
+                <div class="pokemon-evolution-container">${PokemonEvolutionTemplate(pokemon.evolutionChain, pokemon.name)}</div>
+            </div>
+        </div>
+        <div class="mobile-navigation">
+            <button onclick="changeMobilePage(-1)" class="mobile-nav-button">❮</button>
+            <div class="mobile-page-indicator">
+                <span class="active-dot"></span>
+                <span></span>
+                <span></span>
+            </div>
+            <button onclick="changeMobilePage(1)" class="mobile-nav-button">❯</button>
+        </div>
     </div>
-  `;
+    `;
 }
 
 function PokemonTypesTemplate(types) {

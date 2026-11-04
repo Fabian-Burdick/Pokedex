@@ -17,4 +17,5 @@
   --button-border-color: rgb(242, 202, 47);
   --plusbutton-hover-color: rgb(74, 110, 178);
   --plusbutton-hover-shadow: 0 0 30px rgba(74, 110, 178, 0.7);
+  --prevnextbutton-color: rgb(74, 110, 178);
 }
