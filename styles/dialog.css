@@ -17,7 +17,7 @@ body:has(dialog[open]) {
   overflow: hidden;
 }
 
-.prev-next-button {
+.prev-button {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--prevnextbutton-color);
@@ -26,12 +26,25 @@ body:has(dialog[open]) {
   height: 40px;
   border-radius: 100%;
   background-color: rgb(59, 58, 58);
+  rotate: calc(180deg);
+  display: flex;
 }
 
 .close-button {
   font-size: 1.5rem;
   font-weight: bold;
   color: red;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: rgb(59, 58, 58);
+}
+
+.next-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--prevnextbutton-color);
   text-align: center;
   width: 40px;
   height: 40px;
@@ -172,43 +185,50 @@ body:has(dialog[open]) {
   display: block;
 }
 
+@media (max-height: 700px) {
+  .pokemon-typ-container {
+    justify-content: unset;
+  }
+
+  .pokemon-info-container {
+    gap: 0;
+  }
+
+  .pokemon-img {
+    width: 100px;
+  }
+}
+
 /* Mobile */
 @media (max-width: 767px) {
   dialog {
-    width: 92%;
-    height: 85dvh;
-    max-height: 750px;
     padding: 0;
     border-radius: 25px;
-    box-sizing: border-box;
-    overflow: hidden;
   }
+
+  .dialog-section {
+    gap: 0;
+  }
+
   .desktop-dialog {
     display: none;
   }
   .mobile-dialog {
     display: flex;
     flex-direction: column;
-    height: 100%;
     padding: 15px;
-    box-sizing: border-box;
+    justify-content: space-around;
+    height: 100%;
   }
   .mobile-dialog-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: space-around;
   }
   .mobile-dialog-header h2 {
     font-size: 1.1rem;
     color: var(--primary-h3-color);
   }
-  .mobile-pages {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    margin-top: 15px;
-  }
+
   .mobile-page {
     display: none;
     flex-direction: column;
@@ -216,46 +236,52 @@ body:has(dialog[open]) {
     gap: 20px;
     text-align: center;
   }
+
+  .pokemon-img {
+    width: 400px;
+  }
+
   .mobile-page.active-page {
     display: flex;
   }
-  .mobile-pokemon-img {
-    width: 220px;
-    height: 220px;
-    object-fit: contain;
-  }
-  .mobile-page h2 {
-    color: var(--primary-h3-color);
-  }
-  .mobile-page p {
-    color: white;
-  }
-  .mobile-page .pokemon-stats {
+
+  .pokemon-stats {
     width: 100%;
   }
-  .mobile-page .stat-name {
+  .stat-name {
     width: 100px;
     font-size: 0.75rem;
   }
-  .mobile-page .stats-bar {
+  .stats-bar {
     gap: 5px;
   }
-  .mobile-page .stat-number {
+  .stat-number {
     font-size: 0.8rem;
   }
-  .mobile-page .pokemon-evolution-container {
-    flex-wrap: wrap;
-    justify-content: center;
+
+  .pokemon-hw {
+    font-size: 1rem;
   }
-  .mobile-page .evolution-img {
-    width: 75px;
-    height: 75px;
-  }
-  .mobile-navigation {
+
+  .pokemon-evolution-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding-top: 15px;
+    gap: 0;
+  }
+
+  .evolution-arrow {
+    rotate: calc(90deg);
+  }
+
+  .mobile-dialog-footer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    bottom: 0;
   }
   .mobile-nav-button {
     width: 45px;
@@ -279,5 +305,15 @@ body:has(dialog[open]) {
   }
   .mobile-page-indicator .active-dot {
     background-color: #ffcb05;
+  }
+}
+
+@media (max-width: 400px) {
+  .type-text {
+    width: 100px;
+  }
+
+  .pokemon-img {
+    width: 250px;
   }
 }

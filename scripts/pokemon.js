@@ -11,8 +11,11 @@ async function initPokemonApp() {
 }
 
 async function loadNextPokemon(amountToLoad) {
+  loadingScreen.classList.add('active');
+  const startTime = Date.now();
   const nextChunk = allPokemons.slice(currentOffset, currentOffset + amountToLoad);
   currentOffset += amountToLoad;
+
   for (const pokemon of nextChunk) {
     try {
       const detailResponse = await fetch(pokemon.url);
@@ -25,6 +28,10 @@ async function loadNextPokemon(amountToLoad) {
   if (currentOffset >= allPokemons.length) {
     loadMorePokemons.style.display = 'none';
   }
+  const elapsedTime = Date.now() - startTime;
+  const remainingTime = Math.max(0, 2000 - elapsedTime);
+  await new Promise((resolve) => setTimeout(resolve, remainingTime));
+  loadingScreen.classList.remove('active');
 }
 
 //async for Dialog//
@@ -58,20 +65,38 @@ async function fetchEvolutionChain(chainUrl) {
   }
 }
 
+async function preparePokemon(pokemon) {
+  try {
+    const speciesResponse = await fetch(pokemon.species.url);
+    const speciesData = await speciesResponse.json();
+    const evolutionChain = await fetchEvolutionChain(speciesData.evolution_chain.url);
+    pokemon.evolutionChain = evolutionChain || [];
+    return pokemon;
+  } catch (error) {
+    console.error('Fehler beim Laden der Evolution:', error);
+    pokemon.evolutionChain = [];
+    return pokemon;
+  }
+}
+
 async function loadAndOpenPokemon(pokemon) {
+  loadingScreen.classList.add('active');
+  const startTime = Date.now();
   try {
     if (!pokemon.evolutionChain) {
       const speciesResponse = await fetch(pokemon.species.url);
       const speciesData = await speciesResponse.json();
-
       const evolutionChain = await fetchEvolutionChain(speciesData.evolution_chain.url);
       pokemon.evolutionChain = evolutionChain;
     }
-    openDialog(pokemon);
   } catch (error) {
-    console.error('Fehler beim Vorbereiten der Evolutionsdaten:', error);
-    openDialog(pokemon);
+    console.error('Fehler beim Laden:', error);
   }
+  const elapsedTime = Date.now() - startTime;
+  const remainingTime = Math.max(0, 2000 - elapsedTime);
+  await new Promise((resolve) => setTimeout(resolve, remainingTime));
+  loadingScreen.classList.remove('active');
+  openDialog(pokemon);
 }
 
 loadMorePokemons.addEventListener('click', () => {

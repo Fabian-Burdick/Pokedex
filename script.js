@@ -4,6 +4,7 @@ let currentOffset = 0;
 const limit = 20;
 const pokemonCards = document.getElementById('pokeCards');
 const loadMorePokemons = document.getElementById('loadMoreCards');
+const loadingScreen = document.getElementById('loading-screen');
 
 const typeColors = {
   grass: 'bg-green',
