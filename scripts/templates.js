@@ -56,15 +56,13 @@ function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
         <button class="next-button" onclick="nextPokemonBtn(${pokemon.id})">➔</button>
     </div>
     <div class="mobile-dialog">
-        
-            <!-- Seite 1 -->
             <div class="mobile-page active-page">
             <h1>#${pokemon.id}</h1>
             <h1> ${pokemon.name.toUpperCase()}</h1>
                 <img class="pokemon-img" src="${pokemonImg}" alt="${pokemon.name}" />
                 <div class="pokemon-typ">${PokemonTypesTemplate(pokemon.types)}</div>
             </div>
-            <!-- Seite 2 -->
+
             <div class="mobile-page">
                 <h4>Basis-Stats</h4>
                 <div class="pokemon-stats">${PokemonStatsTemplate(pokemon.stats)}</div>
@@ -72,12 +70,11 @@ function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
                 <p class="pokemon-hw">Größe: ${pokemon.height / 10} m</p>
                 <p class="pokemon-hw">Gewicht: ${pokemon.weight / 10} kg</p>
             </div>
-            <!-- Seite 3 -->
+
             <div class="mobile-page">
                 <h4>Entwicklungen</h4>
                 <div class="pokemon-evolution-container">${PokemonEvolutionTemplate(pokemon.evolutionChain, pokemon.name)}</div>
             </div>
-        
     </div>
         <div class="mobile-dialog-footer">
             <button onclick="changeMobilePage(-1)" class="mobile-nav-button">❮</button>
@@ -87,7 +84,6 @@ function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
                 <span></span>
             </div>
             <button onclick="changeMobilePage(1)" class="mobile-nav-button">❯</button>
-
     </div>
     `;
 }
