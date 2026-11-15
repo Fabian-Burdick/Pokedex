@@ -4,7 +4,7 @@ let currentOffset = 0;
 const limit = 20;
 const pokemonCards = document.getElementById('pokeCards');
 const loadMorePokemons = document.getElementById('loadMoreCards');
-const loadingScreen = document.getElementById('loading-screen');
+const loadingScreen = document.getElementById('loadingScreen');
 
 const typeColors = {
   grass: 'bg-green',
@@ -49,16 +49,24 @@ function getPokemonCard(pokemon) {
 
 function searchPokemon(searchString) {
   const pokemonCards = document.querySelectorAll('.pokemon-card');
+  const noResultsMessage = document.getElementById('noResultsMessage');
+  let visibleCount = 0;
   pokemonCards.forEach((card) => {
     const pokemonName = card.querySelector('h3').textContent.toLowerCase();
     if (pokemonName.includes(searchString.toLowerCase())) {
       card.style.display = 'block';
+      visibleCount++;
     } else {
       card.style.display = 'none';
     }
   });
+  if (visibleCount === 0) {
+    noResultsMessage.style.display = 'block';
+  } else {
+    noResultsMessage.style.display = 'none';
+  }
 }
 
-document.getElementById('pokemon-search').addEventListener('input', function (event) {
+document.getElementById('pokemonSearch').addEventListener('input', function (event) {
   searchPokemon(event.target.value);
 });

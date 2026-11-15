@@ -25,13 +25,14 @@
           </a>
         </div>
         <div class="input-content">
-          <input type="search" id="pokemon-search" placeholder="Pokémon suchen" />
+          <input type="search" id="pokemonSearch" placeholder="Pokémon suchen" />
         </div>
       </section>
     </header>
     <main>
       <section id="pokeCards" class="card-section">
         <!--Pokémon-Cards rendered here-->
+        <h1 id="noResultsMessage" style="display: none">Pokémon not found...</h1>
       </section>
 
       <dialog id="pokemonDialog" closedby="any">
@@ -40,7 +41,7 @@
         </section>
       </dialog>
 
-      <div id="loading-screen">
+      <div id="loadingScreen">
         <img src="./assets/images/pokeball2.webp" class="loading-pokeball" />
         <h1>load Pokémon...</h1>
       </div>
