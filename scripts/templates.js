@@ -57,9 +57,8 @@ function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
     </div>
     <div class="mobile-dialog">
             <div class="mobile-page active-page">
-            <h1>#${pokemon.id}</h1>
-            <h1> ${pokemon.name.toUpperCase()}</h1>
-                <img class="pokemon-img" src="${pokemonImg}" alt="${pokemon.name}" />
+            <h1> #${pokemon.id}<br>${pokemon.name.toUpperCase()}</h1>
+                <img class="pokemon-img height" src="${pokemonImg}" alt="${pokemon.name}" />
                 <div class="pokemon-typ">${PokemonTypesTemplate(pokemon.types)}</div>
             </div>
 

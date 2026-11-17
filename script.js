@@ -1,4 +1,7 @@
 let allPokemons = [];
+let loadedPokemons = [];
+let filteredPokemons = [];
+let currentSearch = '';
 let currentOffset = 0;
 
 const limit = 20;
@@ -34,15 +37,14 @@ function getPokemonColorClass(type) {
 function getPokemonCard(pokemon) {
   const card = document.createElement('button');
   card.classList.add('pokemon-card');
+  card.dataset.loaded = 'true';
   card.onclick = async () => {
     await loadAndOpenPokemon(pokemon);
   };
-
   const primaryType = pokemon.types && pokemon.types[0] ? pokemon.types[0].type.name : 'normal';
   card.classList.add(getPokemonColorClass(primaryType));
   const pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
   const typeIconUrl = `./assets/icons/${primaryType}.webp`;
-
   card.innerHTML = PokemonCardsTemplate(pokemon, pokemonImg, typeIconUrl, primaryType);
   pokemonCards.appendChild(card);
 }
@@ -50,21 +52,21 @@ function getPokemonCard(pokemon) {
 function searchPokemon(searchString) {
   const pokemonCards = document.querySelectorAll('.pokemon-card');
   const noResultsMessage = document.getElementById('noResultsMessage');
+  currentSearch = searchString.trim().toLowerCase();
+  filteredPokemons = loadedPokemons.filter((pokemon) => {
+    return currentSearch.length < 3 || pokemon.name.toLowerCase().includes(currentSearch);
+  });
   let visibleCount = 0;
   pokemonCards.forEach((card) => {
     const pokemonName = card.querySelector('h3').textContent.toLowerCase();
-    if (pokemonName.includes(searchString.toLowerCase())) {
+    if (filteredPokemons.some((pokemon) => pokemon.name.toLowerCase() === pokemonName)) {
       card.style.display = 'block';
       visibleCount++;
     } else {
       card.style.display = 'none';
     }
   });
-  if (visibleCount === 0) {
-    noResultsMessage.style.display = 'block';
-  } else {
-    noResultsMessage.style.display = 'none';
-  }
+  noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
 }
 
 document.getElementById('pokemonSearch').addEventListener('input', function (event) {

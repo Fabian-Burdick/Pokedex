@@ -11,15 +11,13 @@ async function initPokemonApp() {
 }
 
 async function loadNextPokemon(amountToLoad) {
-  loadingScreen.classList.add('active');
-  const startTime = Date.now();
   const nextChunk = allPokemons.slice(currentOffset, currentOffset + amountToLoad);
   currentOffset += amountToLoad;
-
   for (const pokemon of nextChunk) {
     try {
       const detailResponse = await fetch(pokemon.url);
       const pokemonDetails = await detailResponse.json();
+      loadedPokemons.push(pokemonDetails);
       getPokemonCard(pokemonDetails);
     } catch (err) {
       console.error(`Fehler beim Laden von ${pokemon.name}:`, err);
@@ -28,10 +26,7 @@ async function loadNextPokemon(amountToLoad) {
   if (currentOffset >= allPokemons.length) {
     loadMorePokemons.style.display = 'none';
   }
-  const elapsedTime = Date.now() - startTime;
-  const remainingTime = Math.max(0, 2000 - elapsedTime);
-  await new Promise((resolve) => setTimeout(resolve, remainingTime));
-  loadingScreen.classList.remove('active');
+  searchPokemon(currentSearch);
 }
 
 //async for Dialog//
@@ -79,28 +74,35 @@ async function preparePokemon(pokemon) {
   }
 }
 
-async function loadAndOpenPokemon(pokemon) {
-  loadingScreen.classList.add('active');
+async function loadAndOpenPokemon(pokemon, showLoading = true) {
+  const needsLoading = !pokemon.evolutionChain;
+  const shouldShowLoader = needsLoading && showLoading;
   const startTime = Date.now();
   try {
-    if (!pokemon.evolutionChain) {
+    if (shouldShowLoader) {
+      loadingScreen.classList.add('active');
+    }
+    if (needsLoading) {
       const speciesResponse = await fetch(pokemon.species.url);
       const speciesData = await speciesResponse.json();
       const evolutionChain = await fetchEvolutionChain(speciesData.evolution_chain.url);
       pokemon.evolutionChain = evolutionChain;
+      if (shouldShowLoader) {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, 1000 - elapsedTime);
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      }
     }
   } catch (error) {
     console.error('Fehler beim Laden:', error);
+  } finally {
+    if (shouldShowLoader) {
+      loadingScreen.classList.remove('active');
+    }
   }
-  const elapsedTime = Date.now() - startTime;
-  const remainingTime = Math.max(0, 2000 - elapsedTime);
-  await new Promise((resolve) => setTimeout(resolve, remainingTime));
-  loadingScreen.classList.remove('active');
   openDialog(pokemon);
 }
 
 loadMorePokemons.addEventListener('click', () => {
   loadNextPokemon(limit);
 });
-
-initPokemonApp();

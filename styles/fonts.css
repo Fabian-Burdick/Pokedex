@@ -68,6 +68,7 @@ p {
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 1.75rem;
+    line-height: 1.5;
   }
 
   h2 {

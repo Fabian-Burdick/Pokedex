@@ -3,6 +3,10 @@
   scroll-behavior: smooth;
 }
 
+.d-none {
+  display: none;
+}
+
 button {
   border: none;
   cursor: pointer;
