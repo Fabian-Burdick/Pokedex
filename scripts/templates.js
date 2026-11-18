@@ -1,25 +1,24 @@
 function PokemonCardsTemplate(pokemon, pokemonImg) {
-  const typeIconsHTML = pokemon.types
-    .map((t) => {
-      const typeName = t.type.name;
-      const iconUrl = `assets/icons/${typeName}.webp`;
-      return `
-        <img class="type-icon ${getPokemonColorClass(typeName)}" 
-             src="${iconUrl}" 
-             alt="${typeName}" 
-             title="${typeName.toUpperCase()}">
-      `;
-    })
-    .join('');
   return `
-        <h3>${pokemon.name}</h3>
-        <img src="${pokemonImg}" alt="${pokemon.name}">
-        <div class="types-container">
-            ${typeIconsHTML}
-        </div>
+    <h3>${pokemon.name}</h3>
+    <img src="${pokemonImg}" alt="${pokemon.name}">
+    <div class="types-container">
+      ${pokemon.types
+        .map((t) => {
+          const typeName = t.type.name;
+          return `
+            <img
+              class="type-icon ${getPokemonColorClass(typeName)}"
+              src="assets/icons/${typeName}.webp"
+              alt="${typeName}"
+              title="${typeName.toUpperCase()}"
+            >
+          `;
+        })
+        .join('')}
+    </div>
   `;
 }
-
 function PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType) {
   return `
     <div class="desktop-dialog">
