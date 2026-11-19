@@ -76,9 +76,10 @@ function formatPokemonName(name) {
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-function mobileDialog() {
+function changeMobilePage(direction) {
   const pages = document.querySelectorAll('.mobile-page');
   const dots = document.querySelectorAll('.mobile-page-indicator span');
+  if (pages.length === 0) return;
   currentMobilePage += direction;
   if (currentMobilePage < 0) {
     currentMobilePage = pages.length - 1;
@@ -86,10 +87,6 @@ function mobileDialog() {
   if (currentMobilePage >= pages.length) {
     currentMobilePage = 0;
   }
-}
-
-function changeToMobileDialog(direction) {
-  mobileDialog();
   pages.forEach((page, index) => {
     page.classList.toggle('active-page', index === currentMobilePage);
   });
@@ -104,3 +101,5 @@ window.matchMedia('(max-width: 767px)').addEventListener('change', () => {
     renderPokemonDialog(currentPokemon);
   }
 });
+
+let currentMobilePage = 0;
