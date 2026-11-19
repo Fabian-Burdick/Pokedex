@@ -1,24 +1,19 @@
 let currentPokemon = null;
 const dialogRef = document.getElementById('pokemonDialog');
 
-function renderPokemonDesktopDialog(pokemon) {
+function renderPokemonDialog(pokemon) {
   const dialogContent = document.getElementById('dialogContent');
-  const pokemonImg = pokemon.sprites?.other?.['official-artwork']?.front_default || pokemon.sprites?.front_default || '';
-  const primaryType = pokemon.types?.[0]?.type?.name || 'normal';
-  const isMobile = window.matchMedia('(max-width: 767px)').matches;
-  if (isMobile) {
-    dialogContent.innerHTML = PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType);
-    dialogRef.className = 'mobile-view';
-  } else {
-    dialogContent.innerHTML = PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType);
-    dialogRef.className = 'desktop-view';
-  }
+  const { pokemonImg, primaryType, isMobile } = getPokemonDialogData(pokemon);
+
+  return (dialogContent.innerHTML = isMobile
+    ? PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType)
+    : PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType));
 }
 
 function openDialog(pokemon) {
   try {
     currentPokemon = pokemon;
-    renderPokemonDesktopDialog(pokemon);
+    renderPokemonDialog(pokemon);
     if (!dialogRef.open) {
       dialogRef.showModal();
     }
@@ -29,31 +24,6 @@ function openDialog(pokemon) {
 
 function closeDialog() {
   dialogRef.close();
-}
-window.matchMedia('(max-width: 767px)').addEventListener('change', () => {
-  if (dialogRef.open && currentPokemon) {
-    renderPokemonDesktopDialog(currentPokemon);
-  }
-});
-
-function renderPokemonMobileDialog(pokemon) {
-  const dialogContent = document.getElementById('dialogContent');
-  const pokemonImg = pokemon.sprites?.other?.['official-artwork']?.front_default || pokemon.sprites?.front_default || '';
-  const primaryType = pokemon.types?.[0]?.type?.name || 'normal';
-  const isMobile = window.matchMedia('(max-width: 767px)').matches;
-
-  if (isMobile) {
-    dialogContent.innerHTML = PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType);
-  } else {
-    dialogContent.innerHTML = PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType);
-  }
-}
-
-function updateProgressBar() {
-  let percent = (currentQuestion + 1) / questions.length;
-  percent = Math.round(percent * 100);
-  document.getElementById('progressBar').innerHTML = `${percent}%`;
-  document.getElementById('progressBar').style.width = `${percent}%`;
 }
 
 function nextPokemonBtn(id) {
@@ -68,7 +38,6 @@ function nextPokemonBtn(id) {
 
 function previousPokemonBtn(id) {
   const currentIndex = filteredPokemons.findIndex((p) => p.id === id);
-
   if (currentIndex > 0) {
     const previousPokemon = filteredPokemons[currentIndex - 1];
 
@@ -76,9 +45,38 @@ function previousPokemonBtn(id) {
   }
 }
 
-let currentMobilePage = 0;
+function getPokemonDialogData(pokemon) {
+  return {
+    pokemonImg: pokemon.sprites?.other?.['official-artwork']?.front_default || pokemon.sprites?.front_default || '',
+    primaryType: pokemon.types?.[0]?.type?.name || 'normal',
+    isMobile: window.matchMedia('(max-width: 767px)').matches,
+  };
+}
 
-function changeMobilePage(direction) {
+function calculateStatPercent(baseStat) {
+  return Math.min((baseStat / 255) * 100, 100);
+}
+
+function updateStatsBar() {
+  let percent = (currentQuestion + 1) / questions.length;
+  percent = Math.round(percent * 100);
+  document.getElementById('progressBar').innerHTML = `${percent}%`;
+  document.getElementById('progressBar').style.width = `${percent}%`;
+}
+
+function filterEvolutionChain(evolutionChain) {
+  return evolutionChain.filter((p) => p && p.name);
+}
+
+function isCurrentPokemon(pokemonName, currentPokemonName) {
+  return pokemonName.toLowerCase() === currentPokemonName.toLowerCase() ? 'active-evolution' : '';
+}
+
+function formatPokemonName(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function mobileDialog() {
   const pages = document.querySelectorAll('.mobile-page');
   const dots = document.querySelectorAll('.mobile-page-indicator span');
   currentMobilePage += direction;
@@ -88,6 +86,10 @@ function changeMobilePage(direction) {
   if (currentMobilePage >= pages.length) {
     currentMobilePage = 0;
   }
+}
+
+function changeToMobileDialog(direction) {
+  mobileDialog();
   pages.forEach((page, index) => {
     page.classList.toggle('active-page', index === currentMobilePage);
   });
@@ -95,3 +97,10 @@ function changeMobilePage(direction) {
     dot.classList.toggle('active-dot', index === currentMobilePage);
   });
 }
+
+window.matchMedia('(max-width: 767px)').addEventListener('change', () => {
+  if (dialogRef.open && currentPokemon) {
+    currentMobilePage = 0;
+    renderPokemonDialog(currentPokemon);
+  }
+});

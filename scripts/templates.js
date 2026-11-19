@@ -100,36 +100,35 @@ function PokemonTypesTemplate(types) {
 function PokemonStatsTemplate(stats, primaryType) {
   return stats
     .map((s) => {
-      const percent = (s.base_stat / 255) * 100;
       return `
-      <div class="stats-bar">
-        <p class="stat-name">${s.stat.name.toUpperCase()}</p>
-        <div class="stat-bar-container">
-          <div class="stat-bar-fill" style="width: ${percent}%;">
-            <span class="stat-number">${s.base_stat}</span>
-          </div>
-        </div>
-      </div>`;
+                <div class="stats-bar">
+                    <p class="stat-name">${s.stat.name.toUpperCase()}</p>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-fill" style="width: ${calculateStatPercent(s.base_stat)}%;">
+                            <span class="stat-number">${s.base_stat}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
     })
     .join('');
 }
 
 function PokemonEvolutionTemplate(evolutionChain, currentPokemonName) {
-  if (!evolutionChain || !Array.isArray(evolutionChain) || evolutionChain.length <= 1) {
-    return `<p class="no-evolution">Dieses Pokémon hat keine Entwicklungen.</p>`;
-  }
-  return evolutionChain
-    .map((p) => {
-      if (!p || !p.name) return '';
-      const isCurrent = p.name.toLowerCase() === currentPokemonName.toLowerCase() ? 'active-evolution' : '';
-      const formattedName = p.name.charAt(0).toUpperCase() + p.name.slice(1);
-      return `
-                <div class="evolution-step ${isCurrent}">
+  return `
+        ${
+          evolutionChain.length <= 1
+            ? `<p class="no-evolution">Dieses Pokémon hat keine Entwicklungen.</p>`
+            : filterEvolutionChain(evolutionChain)
+                .map(
+                  (p) => `
+                <div class="evolution-step ${isCurrentPokemon(p.name, currentPokemonName)}">
                     <img class="evolution-img" src="${p.image}" alt="${p.name}">
-                    <h2>${formattedName}</h2>
+                    <h2>${formatPokemonName(p.name)}</h2>
                 </div>
-            `;
-    })
-    .filter((html) => html !== '')
-    .join(' <span class="evolution-arrow">➔</span> ');
+            `,
+                )
+                .join(' <span class="evolution-arrow">➔</span> ')
+        }
+    `;
 }

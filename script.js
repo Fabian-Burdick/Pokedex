@@ -49,13 +49,7 @@ function getPokemonCard(pokemon) {
   pokemonCards.appendChild(card);
 }
 
-function searchPokemon(searchString) {
-  const pokemonCards = document.querySelectorAll('.pokemon-card');
-  const noResultsMessage = document.getElementById('noResultsMessage');
-  currentSearch = searchString.trim().toLowerCase();
-  filteredPokemons = loadedPokemons.filter((pokemon) => {
-    return currentSearch.length < 3 || pokemon.name.toLowerCase().includes(currentSearch);
-  });
+function filterPokemon(pokemonCards, filteredPokemons, noResultsMessage) {
   let visibleCount = 0;
   pokemonCards.forEach((card) => {
     const pokemonName = card.querySelector('h3').textContent.toLowerCase();
@@ -67,6 +61,16 @@ function searchPokemon(searchString) {
     }
   });
   noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+function searchPokemon(searchString) {
+  const pokemonCards = document.querySelectorAll('.pokemon-card');
+  const noResultsMessage = document.getElementById('noResultsMessage');
+  currentSearch = searchString.trim().toLowerCase();
+  filteredPokemons = loadedPokemons.filter((pokemon) => {
+    return currentSearch.length < 3 || pokemon.name.toLowerCase().includes(currentSearch);
+  });
+  filterPokemon(pokemonCards, filteredPokemons, noResultsMessage);
 }
 
 document.getElementById('pokemonSearch').addEventListener('input', function (event) {

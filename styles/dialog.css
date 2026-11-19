@@ -39,7 +39,6 @@ body:has(dialog[open]) {
   border-radius: 100%;
   background-color: rgb(59, 58, 58);
   rotate: calc(180deg);
-  display: flex;
 }
 
 .close-button {
@@ -197,6 +196,25 @@ body:has(dialog[open]) {
 
 /* Mobile */
 
+@media (max-height: 800px) {
+  .mobile-page.mobile-page.active-page {
+    gap: 0px;
+  }
+
+  .evolution-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .pokemon-evolution-container h2 {
+    font-size: 0.75rem;
+  }
+
+  .evolution-arrow {
+    font-size: 1rem;
+  }
+}
+
 @media (max-height: 600px) {
   .pokemon-img.height {
     width: 200px;
@@ -318,5 +336,9 @@ body:has(dialog[open]) {
 
   .pokemon-img {
     width: 250px;
+  }
+
+  .stat-bar-fill {
+    justify-content: center;
   }
 }
