@@ -102,6 +102,7 @@ async function loadAndOpenPokemon(pokemon, showLoading = true) {
     if (shouldShowLoader) loadingScreen.classList.remove('active');
   }
   openDialog(pokemon);
+  updatePokemonNavigation(pokemon.id);
 }
 
 loadMorePokemons.addEventListener('click', () => {

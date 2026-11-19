@@ -23,9 +23,9 @@ function PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType) {
   return `
     <div class="desktop-dialog">
         <div class="dialog-header">
-            <button class="prev-button" onclick="previousPokemonBtn(${pokemon.id})">➔</button>
+            <button class="prev-button" onclick="previousPokemonButton(${pokemon.id})">➔</button>
             <button class="close-button" onclick="closeDialog()">X</button>
-            <button class="next-button" onclick="nextPokemonBtn(${pokemon.id})">➔</button>
+            <button class="next-button" onclick="nextPokemonButton(${pokemon.id})">➔</button>
         </div>
         <div class="pokemon-info">
             <div class="pokemon-typ-container">
@@ -50,9 +50,9 @@ function PokemonDesktopDialogTemplate(pokemon, pokemonImg, primaryType) {
 function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
   return `
     <div class="mobile-dialog-header">
-        <button class="prev-button" onclick="previousPokemonBtn(${pokemon.id})">➔</button>
+        <button class="prev-button" onclick="previousPokemonButton(${pokemon.id})">➔</button>
         <button class="close-button" onclick="closeDialog()">X</button>
-        <button class="next-button" onclick="nextPokemonBtn(${pokemon.id})">➔</button>
+        <button class="next-button" onclick="nextPokemonButton(${pokemon.id})">➔</button>
     </div>
     <div class="mobile-dialog">
             <div class="mobile-page active-page">

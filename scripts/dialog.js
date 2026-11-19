@@ -26,22 +26,32 @@ function closeDialog() {
   dialogRef.close();
 }
 
-function nextPokemonBtn(id) {
-  const currentIndex = filteredPokemons.findIndex((p) => p.id === id);
+function updatePokemonNavigation(id) {
+  const currentIndex = filteredPokemons.findIndex((pokemon) => pokemon.id === id);
 
-  if (currentIndex >= 0 && currentIndex < filteredPokemons.length - 1) {
-    const nextPokemon = filteredPokemons[currentIndex + 1];
+  const previousButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
 
-    loadAndOpenPokemon(nextPokemon, false);
+  // Previous beim ersten Pokémon ausblenden
+  previousButton?.classList.toggle('d-none', currentIndex === 0);
+
+  // Next beim letzten Pokémon ausblenden
+  nextButton?.classList.toggle('d-none', currentIndex === filteredPokemons.length - 1);
+}
+
+function nextPokemonButton(id) {
+  const currentIndex = filteredPokemons.findIndex((pokemon) => pokemon.id === id);
+
+  if (currentIndex < filteredPokemons.length - 1) {
+    loadAndOpenPokemon(filteredPokemons[currentIndex + 1], false);
   }
 }
 
-function previousPokemonBtn(id) {
-  const currentIndex = filteredPokemons.findIndex((p) => p.id === id);
-  if (currentIndex > 0) {
-    const previousPokemon = filteredPokemons[currentIndex - 1];
+function previousPokemonButton(id) {
+  const currentIndex = filteredPokemons.findIndex((pokemon) => pokemon.id === id);
 
-    loadAndOpenPokemon(previousPokemon, false);
+  if (currentIndex > 0) {
+    loadAndOpenPokemon(filteredPokemons[currentIndex - 1], false);
   }
 }
 
