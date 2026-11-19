@@ -89,9 +89,9 @@ function PokemonMobileDialogTemplate(pokemon, pokemonImg, primaryType) {
 function PokemonTypesTemplate(types) {
   return types
     .map(
-      (t) => `
-      <h3 class="type-text ${getPokemonColorClass(t.type.name)}">
-        ${t.type.name}
+      (color) => `
+      <h3 class="type-text ${getPokemonColorClass(color.type.name)}">
+        ${color.type.name}
       </h3>`,
     )
     .join('');
@@ -99,13 +99,13 @@ function PokemonTypesTemplate(types) {
 
 function PokemonStatsTemplate(stats, primaryType) {
   return stats
-    .map((s) => {
+    .map((basic) => {
       return `
                 <div class="stats-bar">
-                    <p class="stat-name">${s.stat.name.toUpperCase()}</p>
+                    <p class="stat-name">${basic.stat.name.toUpperCase()}</p>
                     <div class="stat-bar-container">
-                        <div class="stat-bar-fill" style="width: ${calculateStatPercent(s.base_stat)}%;">
-                            <span class="stat-number">${s.base_stat}</span>
+                        <div class="stat-bar-fill" style="width: ${calculateStatPercent(basic.base_stat)}%;">
+                            <span class="stat-number">${basic.base_stat}</span>
                         </div>
                     </div>
                 </div>
@@ -121,10 +121,10 @@ function PokemonEvolutionTemplate(evolutionChain, currentPokemonName) {
             ? `<p class="no-evolution">Dieses Pokémon hat keine Entwicklungen.</p>`
             : filterEvolutionChain(evolutionChain)
                 .map(
-                  (p) => `
-                <div class="evolution-step ${isCurrentPokemon(p.name, currentPokemonName)}">
-                    <img class="evolution-img" src="${p.image}" alt="${p.name}">
-                    <h2>${formatPokemonName(p.name)}</h2>
+                  (evolution) => `
+                <div class="evolution-step ${isCurrentPokemon(evolution.name, currentPokemonName)}">
+                    <img class="evolution-img" src="${evolution.image}" alt="${evolution.name}">
+                    <h2>${formatPokemonName(evolution.name)}</h2>
                 </div>
             `,
                 )

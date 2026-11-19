@@ -31,31 +31,38 @@ async function loadNextPokemon(amountToLoad) {
 
 //async for Dialog//
 
+function getPokemonEvolutionData(currentStep) {
+  const pokemonId = Number(currentStep.species.url.split('/').filter(Boolean).pop());
+  return {
+    id: pokemonId,
+    name: currentStep.species.name,
+    image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`,
+  };
+}
+
+function getNextEvolution(currentStep) {
+  return currentStep.evolves_to?.[0] || null;
+}
+
+async function loadEvolutionChain(pokemon) {
+  const response = await fetch(pokemon.species.url);
+  const data = await response.json();
+  return fetchEvolutionChain(data.evolution_chain.url);
+}
+
 async function fetchEvolutionChain(chainUrl) {
   try {
     const response = await fetch(chainUrl);
     const chainData = await response.json();
     const chain = [];
     let currentStep = chainData.chain;
-
     while (currentStep) {
-      const urlParts = currentStep.species.url.split('/').filter(Boolean);
-      const pokemonId = parseInt(urlParts[urlParts.length - 1], 10);
-      const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-      chain.push({
-        id: pokemonId,
-        name: currentStep.species.name,
-        image: imgUrl,
-      });
-      if (currentStep.evolves_to && currentStep.evolves_to.length > 0) {
-        currentStep = currentStep.evolves_to[0];
-      } else {
-        currentStep = null;
-      }
+      chain.push(getPokemonEvolutionData(currentStep));
+      currentStep = getNextEvolution(currentStep);
     }
     return chain;
-  } catch (err) {
-    console.error('Fehler beim Laden der Entwicklungskette:', err);
+  } catch (error) {
+    console.error('Fehler beim Laden der Entwicklungskette:', error);
     return null;
   }
 }
@@ -74,31 +81,25 @@ async function preparePokemon(pokemon) {
   }
 }
 
+async function waitForLoadingScreen(startTime) {
+  const remainingTime = Math.max(0, 1000 - (Date.now() - startTime));
+  await new Promise((resolve) => setTimeout(resolve, remainingTime));
+}
+
 async function loadAndOpenPokemon(pokemon, showLoading = true) {
   const needsLoading = !pokemon.evolutionChain;
   const shouldShowLoader = needsLoading && showLoading;
   const startTime = Date.now();
   try {
-    if (shouldShowLoader) {
-      loadingScreen.classList.add('active');
-    }
+    if (shouldShowLoader) loadingScreen.classList.add('active');
     if (needsLoading) {
-      const speciesResponse = await fetch(pokemon.species.url);
-      const speciesData = await speciesResponse.json();
-      const evolutionChain = await fetchEvolutionChain(speciesData.evolution_chain.url);
-      pokemon.evolutionChain = evolutionChain;
-      if (shouldShowLoader) {
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = Math.max(0, 1000 - elapsedTime);
-        await new Promise((resolve) => setTimeout(resolve, remainingTime));
-      }
+      pokemon.evolutionChain = await loadEvolutionChain(pokemon);
+      if (shouldShowLoader) await waitForLoadingScreen(startTime);
     }
   } catch (error) {
     console.error('Fehler beim Laden:', error);
   } finally {
-    if (shouldShowLoader) {
-      loadingScreen.classList.remove('active');
-    }
+    if (shouldShowLoader) loadingScreen.classList.remove('active');
   }
   openDialog(pokemon);
 }
